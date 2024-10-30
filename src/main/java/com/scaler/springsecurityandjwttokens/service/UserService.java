@@ -4,6 +4,7 @@ import com.scaler.springsecurityandjwttokens.DTO.LoginDto;
 import com.scaler.springsecurityandjwttokens.DTO.UserDto;
 import com.scaler.springsecurityandjwttokens.models.Users;
 import com.scaler.springsecurityandjwttokens.repo.UserRepo;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.task.ThreadPoolTaskSchedulerBuilder;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -33,14 +34,20 @@ public class UserService {
     public Users register(UserDto userDto)
     {
 
-        Users user = new Users();
-//        user.setId(userDto.getId());
-        user.setUserName(userDto.getUserName());
-        user.setPassword(userDto.getPassword());
-        user.setRole(userDto.getRole());
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        Users user = userRepo.findByUserName(userDto.getUserName());
 
-        return userRepo.save(user);
+        if(user == null)
+        {
+            user = new Users();
+            //        user.setId(userDto.getId());
+            user.setUserName(userDto.getUserName());
+            user.setPassword(userDto.getPassword());
+            user.setRole(userDto.getRole());
+            user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+            return userRepo.save(user);
+        }
+
+        return user;
     }
 
     public String verify(LoginDto userDto)
