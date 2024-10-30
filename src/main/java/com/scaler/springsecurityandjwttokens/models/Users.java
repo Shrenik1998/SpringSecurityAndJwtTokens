@@ -12,7 +12,6 @@ public class Users {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")  // Customize column name or leave it as default
     private int id;
 
     @Column(name = "user_name")  // Custom column name in the table

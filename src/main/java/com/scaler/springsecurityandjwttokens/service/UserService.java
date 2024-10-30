@@ -34,7 +34,7 @@ public class UserService {
     {
 
         Users user = new Users();
-        user.setId(userDto.getId());
+//        user.setId(userDto.getId());
         user.setUserName(userDto.getUserName());
         user.setPassword(userDto.getPassword());
         user.setRole(userDto.getRole());
